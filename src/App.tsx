@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'
 import './App.css';
 import { getNumbers } from './utils';
 import { Pagination } from './components/Pagination/Pagination';
@@ -7,8 +8,22 @@ import { Pagination } from './components/Pagination/Pagination';
 const items = getNumbers(1, 42).map(n => `Item ${n}`);
 
 export const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = parseInt(queryParams.get('page') || '1', 10);
+  const initialPerPage = parseInt(queryParams.get('perPage') || '5', 10);
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [perPage, setPerPage] = useState(initialPerPage);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    params.set('page', currentPage.toString());
+    params.set('perPage', perPage.toString());
+
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [currentPage, perPage, navigate]);
 
   function handlePageChange(page: number, newPerPage: number) {
     setCurrentPage(page);
