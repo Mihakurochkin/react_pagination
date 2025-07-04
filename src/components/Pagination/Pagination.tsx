@@ -1,4 +1,4 @@
-import cn from "classnames";
+import cn from 'classnames';
 
 type PaginationProps = {
   total: number;
@@ -20,13 +20,17 @@ export const Pagination: React.FC<PaginationProps> = ({
       <ul className="pagination">
         <li
           data-cy="prevLink"
-          className={cn("page-item", { disabled: currentPage === 1 })}
-          onClick={() => currentPage > 1 && onPageChange(currentPage - 1, perPage)}>
+          className={cn('page-item', { disabled: currentPage === 1 })}
+          onClick={() =>
+            currentPage > 1 && onPageChange(currentPage - 1, perPage)
+          }
+        >
           <a
             data-cy="prevLink"
             className="page-link"
             href="#prev"
-            aria-disabled="true">
+            aria-disabled="true"
+          >
             «
           </a>
         </li>
@@ -34,12 +38,14 @@ export const Pagination: React.FC<PaginationProps> = ({
         {Array.from({ length: totalPages }, (_, index) => (
           <li
             data-cy="pageLink"
-            className={cn("page-item", { active: index + 1 === currentPage })}
-            key={index}>
+            className={cn('page-item', { active: index + 1 === currentPage })}
+            key={index}
+          >
             <a
               className="page-link"
               href={`#${index + 1}`}
-              onClick={() => onPageChange(index + 1, perPage)}>
+              onClick={() => onPageChange(index + 1, perPage)}
+            >
               {index + 1}
             </a>
           </li>
@@ -47,24 +53,28 @@ export const Pagination: React.FC<PaginationProps> = ({
 
         <li
           data-cy="nextLink"
-          className={cn("page-item", { disabled: currentPage === totalPages })}
-          onClick={() => currentPage < totalPages && onPageChange(currentPage + 1, perPage)}>
+          className={cn('page-item', { disabled: currentPage === totalPages })}
+          onClick={() =>
+            currentPage < totalPages && onPageChange(currentPage + 1, perPage)
+          }
+        >
           <a
             data-cy="nextLink"
             className="page-link"
             href="#next"
-            aria-disabled="true">
+            aria-disabled="true"
+          >
             »
           </a>
         </li>
       </ul>
 
       <ul className="pagination-column">
-        {Array.from({ length: perPage }, (_, index) => (
-            <li data-cy="item" key={index}>
-              Item {perPage * (currentPage - 1) + index + 1}
-            </li>
-          ))}
+        {Array.from({ length: currentPage === totalPages ? total - (currentPage - 1) * perPage : perPage }, (_, index) => (
+          <li data-cy="item" key={index}>
+            Item {perPage * (currentPage - 1) + index + 1 }
+          </li>
+        ))}
       </ul>
     </div>
   );

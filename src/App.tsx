@@ -20,7 +20,11 @@ export const App: React.FC = () => {
       <h1>Items with Pagination</h1>
 
       <p className="lead" data-cy="info">
-        Page {currentPage} (items {perPage * (currentPage - 1) + 1} - {perPage * currentPage > items.length ? items.length : perPage * currentPage} of {items.length})
+        Page {currentPage} (items {perPage * (currentPage - 1) + 1} -{' '}
+        {perPage * currentPage > items.length
+          ? items.length
+          : perPage * currentPage}{' '}
+        of {items.length})
       </p>
 
       <div className="form-group row">
@@ -30,7 +34,8 @@ export const App: React.FC = () => {
             id="perPageSelector"
             className="form-control"
             value={perPage}
-            onChange={(e) => setPerPage(Number(e.target.value))}>
+            onChange={e => setPerPage(Number(e.target.value))}
+          >
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -43,7 +48,7 @@ export const App: React.FC = () => {
         </label>
       </div>
 
-      <Pagination 
+      <Pagination
         total={items.length}
         perPage={perPage}
         currentPage={currentPage}
