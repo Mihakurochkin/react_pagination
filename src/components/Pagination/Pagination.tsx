@@ -68,14 +68,6 @@ export const Pagination: React.FC<PaginationProps> = ({
           </a>
         </li>
       </ul>
-
-      <ul className="pagination-column">
-        {Array.from({ length: currentPage === totalPages ? total - (currentPage - 1) * perPage : perPage }, (_, index) => (
-          <li data-cy="item" key={index}>
-            Item {perPage * (currentPage - 1) + index + 1 }
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

@@ -34,7 +34,11 @@ export const App: React.FC = () => {
             id="perPageSelector"
             className="form-control"
             value={perPage}
-            onChange={e => setPerPage(Number(e.target.value))}
+            onChange={e => {
+              setPerPage(Number(e.target.value))
+              setCurrentPage(1);
+            }
+            }
           >
             <option value="3">3</option>
             <option value="5">5</option>
@@ -54,6 +58,22 @@ export const App: React.FC = () => {
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
+
+      <ul className="pagination-column">
+        {Array.from(
+          {
+            length:
+              currentPage === Math.ceil(items.length / perPage)
+                ? items.length - (currentPage - 1) * perPage
+                : perPage,
+          },
+          (_, index) => (
+            <li data-cy="item" key={index}>
+              Item {perPage * (currentPage - 1) + index + 1}
+            </li>
+          ),
+        )}
+      </ul>
     </div>
   );
 };
